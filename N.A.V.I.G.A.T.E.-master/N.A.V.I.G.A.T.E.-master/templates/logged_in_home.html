@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Boxicon link -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/home_page.css') }}"
+    />
+
+    <!-- jQuery UI CSS CDN -->
+    <link
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet"
+    />
+
+    <title>Home</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+
+    <!-- Importing jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Flatpickr -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"
+    />
+
+    <!-- Importing the jQuery fullCalendar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
+    <!-- jQuery UI JS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Linking to the JS file -->
+    <script src="{{ url_for('static',filename='script/calendar.js') }}"></script>
+  </head>
+  <body>
+    <div class="side-bar">
+      <div class="nav-menu">
+        <p class="logo">N.A.V.I.G.A.T.E.</p>
+        <!-- Getting it from boxicon -->
+        <i class="bx bx-menu toggle-btn"></i>
+      </div>
+
+      <!-- Creating the list -->
+      <ul class="list">
+        <li class="list-item active">
+          <a href="#">
+            <i class="bx bxs-home"></i>
+            <span class="link-name" style="--i: 1">Home</span>
+          </a>
+        </li>
+        <li class="list-item">
+          <a href="#">
+            <i class="bx bxs-user-account"></i>
+            <span class="link-name" style="--i: 2">Account</span>
+          </a>
+        </li>
+        <li class="list-item">
+          <a href="#">
+            <i class="bx bxs-calendar"></i>
+            <span class="link-name" style="--i: 3">Appointments</span>
+          </a>
+        </li>
+        <li class="list-item">
+          <a href="#">
+            <i class="bx bxs-chat"></i>
+            <span class="link-name" style="--i: 4">Messages</span>
+          </a>
+        </li>
+        <li class="list-item">
+          {# This is the logout button #}
+          <a href="{{ url_for('logout') }}">
+            <i class="bx bx-log-out"></i>
+            <span class="link-name" style="--i: 5">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Calendar name and the Appointment button -->
+    <div class="blur-container" id="blur">
+      <div class="buttonAndLogo">
+        <p class="name">Your Calendar</p>
+        <div class="button">
+          <a href="#" onclick="toggle()">Make an Appointment</a>
+        </div>
+      </div>
+      <!-- Appears after clicking the button -->
+      <div id="popup">
+        <form id="form" action="/create_appointment" method="post">
+          <h3>Create an Event</h3>
+
+          <div class="dropdown-container">
+            <div class="input-box">
+              <label>
+                <select id="firstDropdown" name="firstDropdown">
+                  <option value="Empty">Service Type</option>
+                  <option value="TTC">Tutoring Center</option>
+                  <option value="CAPS">CAPS Appointment</option>
+                </select>
+              </label>
+
+              <!-- Courses input box -->
+              <label>
+                <select
+                  id="secondDropdown"
+                  name="secondDropdown"
+                  style="display: none"
+                ></select>
+              </label>
+
+              <!-- Calendar day -->
+              <label>
+                <input
+                  type="text"
+                  id="datePicker"
+                  name="datePicker"
+                  style="display: none"
+              /></label>
+
+              <!-- Choose your tutor based on the calendar -->
+              <label>
+                <select
+                  id="thirdDropdown"
+                  name="thirdDropdown"
+                  style="display: none"
+                ></select>
+              </label>
+
+              <!--Choose the time slot -->
+
+              <label>
+                <select
+                  id="fourthDropdown"
+                  name="fourthDropdown"
+                  style="display: none"
+                ></select>
+              </label>
+            </div>
+            <!--Two buttons: Cancel, Create -->
+            <div class="two-buttons">
+              <div class="button">
+                <a href="#" onclick="toggle()">Close</a>
+              </div>
+
+              <div class="button">
+                <button
+                  class="createBtn"
+                  id="createBtn"
+                  type="submit"
+                  style="display: none"
+                >
+                  Create
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Calendar -->
+      <div class="container">
+        <div class="calendar"></div>
+      </div>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static',filename='script/home_page.js') }}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static',filename='script/appointmentDropDown.js') }}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static',filename='script/delete_appointment.js') }}"
+    ></script>
+  </body>
+</html>
